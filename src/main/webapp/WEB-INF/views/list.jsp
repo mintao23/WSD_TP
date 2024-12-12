@@ -40,7 +40,7 @@
     <!-- 할 일 목록 -->
     <ul id="todoList" class="list-group mt-4">
         <c:forEach var="todo" items="${list}">
-            <li class="list-group-item d-flex justify-content-between align-items-center"
+            <li onclick="location.href='./view/${todo.id}'" style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center"
                 data-priority="${todo.priority}"
                 data-estdur="${todo.estDur}"
                 data-duedate="${todo.duedate}">
@@ -62,6 +62,14 @@
                     <span class="badge" style="background-color:
                         ${todo.priority == 1 ? 'red' : (todo.priority == 2 ? 'orange' : (todo.priority == 3 ? 'blue' : 'gray'))};">${todo.priority}</span>
                     <span class="badge bg-info">${todo.category}</span>
+                    <a href="edit/${todo.id}">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4226/4226577.png" alt="pencil" width="15"
+                             height="15" style="cursor:pointer;">
+                    </a>
+                    <a href="javascript:delete_ok('${todo.id}')">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="trash" width="15"
+                             height="15" style="cursor:pointer;">
+                    </a>
                 </div>
             </li>
         </c:forEach>

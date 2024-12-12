@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+.img {
+    display: -ms-flexbox;
+}
+.search-container {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-input {
+    width: 300px;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.class {
+    margin: 20px
+}

@@ -1,23 +1,48 @@
 * {
     box-sizing: border-box;
 }
+
 .img {
     display: -ms-flexbox;
-}
-.search-container {
-    margin-bottom: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.search-input {
-    width: 300px;
-    padding: 0.5rem;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
 }
 
 .class {
     margin: 20px
 }
+
+body {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 2.0rem !important;
+    line-height: 1.6 !important;
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+}
+
+.list-group-item .text-muted {
+    font-size: 2.0rem;
+}
+
+.badge {
+    font-size: 1.2rem;
+    padding: 5px 10px;
+}
+
+.btn {
+    font-size: 1.2rem;
+}
+
+.form-control, .form-select {
+    font-size: 2.0rem;
+}
+
+.priority-circle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.fw-bold {
+    font-size: 2.0rem;
+}
+

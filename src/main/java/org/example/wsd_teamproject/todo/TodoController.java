@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/todo")
 public class TodoController {
@@ -26,17 +28,30 @@ public class TodoController {
         return "view"; // view.jsp로 포워딩
     }
 
-    // Todo 작성 페이지 이동
-    @GetMapping("/create")
+//    // Todo 작성 페이지 이동
+//    @GetMapping("/create")
+//    public String createTodoPage() {
+//        return "create"; // create.jsp로 포워딩
+//    }
+//
+//    // Todo 생성
+//    @PostMapping("/create")
+//    public String createTodo(@ModelAttribute TodoVO todo) {
+//        todoService.insertTodo(todo); // insertTodo() 메서드 사용
+//        return "redirect:/todo/list"; // 목록 페이지로 리다이렉트
+//    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String createTodoPage() {
-        return "create"; // create.jsp로 포워딩
+        return "create";
     }
 
-    // Todo 생성
-    @PostMapping("/create")
-    public String createTodo(@ModelAttribute TodoVO todo) {
-        todoService.insertTodo(todo); // insertTodo() 메서드 사용
-        return "redirect:/todo/list"; // 목록 페이지로 리다이렉트
+    @RequestMapping(value = "/createok", method = RequestMethod.POST)
+    public String createTodoOK(TodoVO vo) {
+        int i = todoService.insertTodo(vo);
+        if (i == 0) System.out.println("데이터 추가 실패");
+        else System.out.println("데이터 추가 성공!");
+        return "redirect:list";
     }
 
     // Todo 수정 페이지 이동
@@ -59,5 +74,21 @@ public class TodoController {
     public String deleteTodo(@PathVariable("id") int id) {
         todoService.deleteTodo(id); // deleteTodo() 메서드 사용
         return "redirect:/todo/list"; // 목록 페이지로 리다이렉트
+    }
+
+    // Completed 상태 업데이트
+    @PostMapping("/updateCompleted")
+    @ResponseBody
+    public String updateCompleted(@RequestParam int id, @RequestParam boolean completed) {
+        todoService.updateCompleted(id, completed);
+        return "success";
+    }
+
+    // 검색 기능
+    @GetMapping("/search")
+    public String searchTodos(@RequestParam String searchType, @RequestParam String query, Model model) {
+        List<TodoVO> searchResults = todoService.searchTodos(searchType, query);
+        model.addAttribute("list", searchResults);
+        return "list";
     }
 }

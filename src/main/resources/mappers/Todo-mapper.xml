@@ -20,5 +20,15 @@
     <select id="getTodoList" resultType="todo">
         select * from TODOLIST order by id desc
     </select>
+    <update id="updateCompleted">
+        UPDATE TODOLIST
+        SET completed = #{completed}
+        WHERE id = #{id}
+    </update>
+    <select id="searchTodos" resultType="org.example.wsd_teamproject.todo.TodoVO">
+        SELECT *
+        FROM TODOLIST
+        WHERE ${searchType} LIKE #{query}
+    </select>
 </mapper>
 

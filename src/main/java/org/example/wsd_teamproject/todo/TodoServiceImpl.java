@@ -34,5 +34,13 @@ public class TodoServiceImpl implements TodoService{
     public List<TodoVO> getTodoList() {
         return todoDAO.getTodoList();
     }
+    @Override
+    public int updateCompleted(int id, boolean completed) {
+        return todoDAO.updateCompleted(id, completed);
+    }
 
+    @Override
+    public List<TodoVO> searchTodos(String searchType, String query) {
+        return todoDAO.searchTodos(searchType, query);
+    }
 }

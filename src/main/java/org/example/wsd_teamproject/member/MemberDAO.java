@@ -13,6 +13,4 @@ public class MemberDAO {
     public MemberVO getMember(MemberVO vo) {
         return sqlSession.selectOne("member.getMember", vo);
     }
-
-
 }

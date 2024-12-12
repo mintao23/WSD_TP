@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,7 +19,6 @@
     <button type="submit">Login</button>
   </form>
 
-  <!-- 로그인 실패 시 에러 메시지 표시 -->
   <c:if test="${not empty loginError}">
     <div class="error">${loginError}</div>
   </c:if>

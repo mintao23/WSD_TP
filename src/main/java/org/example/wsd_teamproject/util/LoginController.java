@@ -28,6 +28,7 @@ public class LoginController {
         if (session.getAttribute("login") != null) {
             session.removeAttribute("login");
         }
+        // 평문 비밀번호 비교
         MemberVO loginvo = service.getMember(vo);
         if (loginvo != null) {
             System.out.println("로그인 성공!");
@@ -40,6 +41,7 @@ public class LoginController {
         }
         return returnURL;
     }
+
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session) {
         session.invalidate();

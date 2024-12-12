@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="todo">
+<mapper namespace="Todo">
     <insert id="insertTodo">
-        insert into TODOLIST (title, content, category, duedate, priority, estDur) values (#{title},#{content},#{category},#{duedate},#{priority},#{estDur})
+        insert into TODOLIST (title, content, category, duedate, priority, estDur)
+        values (#{title}, #{content}, #{category}, #{duedate}, #{priority}, #{estDur})
     </insert>
     <update id="updateTodo">
-        update TODOLIST set title=#{title},content=#{content},category=#{category},duedate=#{duedate},priority=#{priority},estDur=#{estDur} where id=#{id}
+        update TODOLIST
+        set title=#{title}, content=#{content}, category=#{category}, duedate=#{duedate},
+            priority=#{priority}, estDur=#{estDur}
+        where id=#{id}
     </update>
     <delete id="deleteTodo">
         delete from TODOLIST where id=#{id}
@@ -17,3 +21,4 @@
         select * from TODOLIST order by id desc
     </select>
 </mapper>
+

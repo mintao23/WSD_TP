@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
     <select id="getMember" resultType="org.example.wsd_teamproject.member.MemberVO">
-        select userid, username from MEMBER where userid=#{userid} and password=password(#{password})
+        SELECT userid, username
+        FROM MEMBER
+        WHERE userid=#{userid} AND password=#{password}
     </select>
 </mapper>

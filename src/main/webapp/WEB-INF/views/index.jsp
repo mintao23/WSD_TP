@@ -91,7 +91,7 @@
     <div class="content">
         <h1>Task mate에 오신걸 환영합니다!</h1>
         <p>Task mate는 여러분의 일정을 효율적으로 관리하기 위해 설계된 투두리스트입니다.</p>
-        <a href="login/login" class="login-btn">Log in</a> <!-- 로그인 버튼 -->
+        <a href="login/login" class="login-btn">Log in</a>
     </div>
 </div>
 </body>

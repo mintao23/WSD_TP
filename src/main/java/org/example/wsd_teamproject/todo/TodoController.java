@@ -49,9 +49,9 @@ public class TodoController {
     @RequestMapping(value = "/createok", method = RequestMethod.POST)
     public String createTodoOK(TodoVO vo) {
         int i = todoService.insertTodo(vo);
-        if (i == 0) System.out.println("데이터 추가 실패");
-        else System.out.println("데이터 추가 성공!");
-        return "redirect:list";
+        if (i == 0) System.out.println("할 일 추가 실패");
+        else System.out.println("할 일 추가 성공!");
+        return "redirect:/todo/list";
     }
 
     // Todo 수정 페이지 이동
@@ -70,10 +70,17 @@ public class TodoController {
     }
 
     // Todo 삭제
-    @GetMapping("/delete/{id}")
-    public String deleteTodo(@PathVariable("id") int id) {
-        todoService.deleteTodo(id); // deleteTodo() 메서드 사용
-        return "redirect:/todo/list"; // 목록 페이지로 리다이렉트
+//    @GetMapping("/deleteok/{id}")
+//    public String deleteTodo(@PathVariable("id") int id) {
+//        todoService.deleteTodo(id); // deleteTodo() 메서드 사용
+//        return "redirect:/todo/list"; // 목록 페이지로 리다이렉트
+//    }
+    @RequestMapping(value = "/deleteok/{id}", method = RequestMethod.GET)
+    public String deletePerson(@PathVariable("id") int id) {
+        int i = todoService.deleteTodo(id);
+        if(i == 0) System.out.println("데이터 삭제 실패");
+        else System.out.println("데이터 삭제 성공!");
+        return "redirect:../list";
     }
 
     // Completed 상태 업데이트

@@ -5,12 +5,42 @@
 <html>
 <head>
     <title>Todo Details</title>
-    <link rel="stylesheet" href="./inc/my.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif !important;
+            background-color: #f8f9fa !important;
+            color: #212529 !important;
+        }
+
+        .list-group-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .list-group-item {
+            font-size: 1.2rem;
+        }
+
+
+        .btn {
+            font-size: 0.9rem;
+        }
+
+    </style>
 </head>
 <body>
 <div class="container mt-5">
@@ -50,7 +80,7 @@
     function deleteTodo(id) {
         const confirmDelete = confirm("정말로 삭제하시겠습니까?");
         if (confirmDelete) {
-            location.href = '../delete/' + id;
+            location.href = '../deleteok/' + id;
         }
     }
 </script>

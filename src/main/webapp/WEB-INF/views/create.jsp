@@ -12,6 +12,24 @@
         }
         .form-label {
             font-weight: bold;
+            font-size: 1.5em;
+        }
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif !important;
+            background-color: #f8f9fa !important;
+            color: #212529 !important;
+        }
+
+        .btn {
+            font-size: 1.5rem;
+        }
+
+        .form-control, .form-select {
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -22,7 +40,7 @@
             <h2>새 할 일 추가</h2>
         </div>
         <div class="d-flex justify-content-center">
-            <form id="todoForm" action="/todo/createok" method="post" class="needs-validation w-100" novalidate>
+            <form id="todoForm" action="createok" method="post" class="needs-validation w-100" novalidate>
                 <div class="row g-3">
                     <!-- 제목 -->
                     <div class="col-sm-12">

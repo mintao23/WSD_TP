@@ -15,6 +15,24 @@
         }
         .form-label {
             font-weight: bold;
+            font-size: 1.5em;
+        }
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif !important;
+            background-color: #f8f9fa !important;
+            color: #212529 !important;
+        }
+
+        .btn {
+            font-size: 1.5rem;
+        }
+
+        .form-control, .form-select {
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -25,7 +43,7 @@
             <h2>Edit Todo</h2>
         </div>
         <div class="d-flex justify-content-center">
-            <form method="post" class="needs-validation w-100" action="/todo/edit" novalidate>
+            <form method="post" class="needs-validation w-100" action="../edit" novalidate>
                 <!-- 숨겨진 ID 필드 -->
                 <input type="hidden" name="id" value="${todo.id}">
 

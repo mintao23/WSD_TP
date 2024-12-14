@@ -55,18 +55,32 @@ public class TodoController {
     }
 
     // Todo 수정 페이지 이동
-    @GetMapping("/edit/{id}")
-    public String editTodoPage(@PathVariable("id") int id, Model model) {
-        TodoVO todo = todoService.getTodo(id); // getTodo() 메서드로 수정
-        model.addAttribute("todo", todo);
-        return "edit"; // edit.jsp로 포워딩
-    }
+//    @GetMapping("/edit/{id}")
+//    public String editTodoPage(@PathVariable("id") int id, Model model) {
+//        TodoVO todo = todoService.getTodo(id); // getTodo() 메서드로 수정
+//        model.addAttribute("todo", todo);
+//        return "edit"; // edit.jsp로 포워딩
+//    }
 
-    // Todo 수정
-    @PostMapping("/edit")
-    public String editTodo(@ModelAttribute TodoVO todo) {
-        todoService.updateTodo(todo); // updateTodo() 메서드 사용
-        return "redirect:/todo/list"; // 목록 페이지로 리다이렉트
+//    // Todo 수정
+//    @PostMapping("/edit")
+//    public String editTodo(@ModelAttribute TodoVO todo) {
+//        todoService.updateTodo(todo); // updateTodo() 메서드 사용
+//        return "redirect:/todo/list"; // 목록 페이지로 리다이렉트
+//    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editPerson(@PathVariable("id") int id, Model model) {
+        TodoVO todoVO = todoService.getTodo(id);
+        model.addAttribute("todo", todoVO);
+        return "edit";
+    }
+    @RequestMapping(value = "/editok", method = RequestMethod.POST)
+    public String editOK(TodoVO vo) {
+        int i = todoService.updateTodo(vo);
+        if(i == 0) System.out.println("데이터 수정 실패");
+        else System.out.println("데이터 수정 성공!");
+        return "redirect:/todo/list";
     }
 
     // Todo 삭제

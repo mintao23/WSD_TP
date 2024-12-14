@@ -43,7 +43,7 @@
             <h2>Edit Todo</h2>
         </div>
         <div class="d-flex justify-content-center">
-            <form method="post" class="needs-validation w-100" action="../edit" novalidate>
+            <form method="post" class="needs-validation w-100" action="../editok" novalidate>
                 <!-- 숨겨진 ID 필드 -->
                 <input type="hidden" name="id" value="${todo.id}">
 

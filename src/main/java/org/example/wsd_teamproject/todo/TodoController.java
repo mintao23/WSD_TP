@@ -20,12 +20,14 @@ public class TodoController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
     // Todo 목록 조회
     @GetMapping("/list")
     public String todolist(Model model) {
+        List<TodoVO> todos = todoService.getTodoList();
         model.addAttribute("list", todoService.getTodoList());
         return "list"; // list.jsp로 포워딩
     }
@@ -38,19 +40,7 @@ public class TodoController {
         return "view"; // view.jsp로 포워딩
     }
 
-//    // Todo 작성 페이지 이동
-//    @GetMapping("/create")
-//    public String createTodoPage() {
-//        return "create"; // create.jsp로 포워딩
-//    }
-//
-//    // Todo 생성
-//    @PostMapping("/create")
-//    public String createTodo(@ModelAttribute TodoVO todo) {
-//        todoService.insertTodo(todo); // insertTodo() 메서드 사용
-//        return "redirect:/todo/list"; // 목록 페이지로 리다이렉트
-//    }
-
+    // Todo 작성 페이지 이동
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String createTodoPage() {
         return "create";
@@ -65,20 +55,6 @@ public class TodoController {
     }
 
     // Todo 수정 페이지 이동
-//    @GetMapping("/edit/{id}")
-//    public String editTodoPage(@PathVariable("id") int id, Model model) {
-//        TodoVO todo = todoService.getTodo(id); // getTodo() 메서드로 수정
-//        model.addAttribute("todo", todo);
-//        return "edit"; // edit.jsp로 포워딩
-//    }
-
-//    // Todo 수정
-//    @PostMapping("/edit")
-//    public String editTodo(@ModelAttribute TodoVO todo) {
-//        todoService.updateTodo(todo); // updateTodo() 메서드 사용
-//        return "redirect:/todo/list"; // 목록 페이지로 리다이렉트
-//    }
-
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editPerson(@PathVariable("id") int id, Model model) {
         TodoVO todoVO = todoService.getTodo(id);
@@ -87,6 +63,11 @@ public class TodoController {
     }
     @RequestMapping(value = "/editok", method = RequestMethod.POST)
     public String editOK(TodoVO vo) {
+        if (vo.getDuedate() == null) {
+            TodoVO existingTodo = todoService.getTodo(vo.getId());
+            vo.setDuedate(existingTodo.getDuedate());
+        }
+
         int i = todoService.updateTodo(vo);
         if(i == 0) System.out.println("데이터 수정 실패");
         else System.out.println("데이터 수정 성공!");
@@ -94,11 +75,6 @@ public class TodoController {
     }
 
     // Todo 삭제
-//    @GetMapping("/deleteok/{id}")
-//    public String deleteTodo(@PathVariable("id") int id) {
-//        todoService.deleteTodo(id); // deleteTodo() 메서드 사용
-//        return "redirect:/todo/list"; // 목록 페이지로 리다이렉트
-//    }
     @RequestMapping(value = "/deleteok/{id}", method = RequestMethod.GET)
     public String deletePerson(@PathVariable("id") int id) {
         int i = todoService.deleteTodo(id);

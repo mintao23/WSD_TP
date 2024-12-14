@@ -15,7 +15,7 @@
         }
         .form-label {
             font-weight: bold;
-            font-size: 1.5em;
+            font-size: 1.6em;
         }
         * {
             box-sizing: border-box;
@@ -40,11 +40,10 @@
 <div class="container">
     <main>
         <div class="py-5 text-center">
-            <h2>Edit Todo</h2>
+            <h1>Edit Todo</h1>
         </div>
         <div class="d-flex justify-content-center">
             <form method="post" class="needs-validation w-100" action="../editok" novalidate>
-                <!-- 숨겨진 ID 필드 -->
                 <input type="hidden" name="id" value="${todo.id}">
 
                 <!-- 제목 -->
@@ -73,10 +72,11 @@
                     <!-- 마감일 -->
                     <div class="col-12">
                         <label for="duedate" class="form-label">마감일</label>
-                        <input type="date" class="form-control" id="duedate" name="duedate" value="${todo.duedate}"
-                               required>
+                        <input type="date" class="form-control" id="duedate" name="duedate"
+                               value="${todo.duedate != null ? todo.getFormattedDuedate() : ''}">
                         <div class="invalid-feedback">마감일을 설정하세요.</div>
                     </div>
+
 
                     <!-- 예상 소요 시간 -->
                     <div class="col-12">

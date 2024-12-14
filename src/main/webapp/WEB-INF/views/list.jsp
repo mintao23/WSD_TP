@@ -70,6 +70,13 @@
         .footer {
             padding: 10px 0;
         }
+
+        .hover-highlight:hover {
+            background-color: #e9ecef;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -93,32 +100,28 @@
     <div class="d-flex justify-content-end mt-3">
         <button class="btn btn-outline-secondary me-2" onclick="sortList('priority')">우선순위</button>
         <button class="btn btn-outline-secondary me-2" onclick="sortList('estDur')">소요시간</button>
-        <button class="btn btn-outline-secondary" onclick="sortList('duedate')" data-criteria="duedate">마감일</button>
-
+        <button class="btn btn-outline-secondary" onclick="sortList('duedate')">마감일</button>
     </div>
 
     <!-- 할 일 목록 -->
     <ul id="todoList" class="list-group mt-4">
         <c:forEach var="todo" items="${list}">
-            <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center"
+            <li class="list-group-item d-flex justify-content-between align-items-center"
                 data-priority="${todo.priority}"
                 data-estdur="${todo.estDur}"
-                data-duedate="${todo.duedate != null ? todo.duedate.toString() : ''}">
+                data-duedate="${todo.getFormattedDuedate()}">
                 <div class="d-flex align-items-center">
-                    <!-- 체크박스 -->
                     <input type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input me-3"
                            onclick="updateCompleted('${todo.id}', this)">
 
-                    <!-- 제목 및 세부 내용 -->
-                    <div onclick="location.href='./view/${todo.id}'">
+                    <div class="hover-highlight" onclick="location.href='./view/${todo.id}'" style="cursor:pointer;">
                         <div class="fw-bold"><h3>${todo.title}</h3></div>
                         <div class="text-muted">
-                                <p>${todo.content} <br>
-                            마감일: ${todo.duedate} | 예상 소요 시간: ${todo.estDur}시간<p/>
+                            <p>${todo.content} <br>
+                                마감일: ${todo.duedate} | 예상 소요 시간: ${todo.estDur}시간<p/>
                         </div>
                     </div>
                 </div>
-                <!-- 카테고리 -->
                 <div>
                     <span class="badge" style="background-color:
                         ${todo.priority == 1 ? 'red' : (todo.priority == 2 ? 'orange' : (todo.priority == 3 ? 'blue' : 'gray'))};">${todo.priority}</span>
@@ -153,43 +156,35 @@
             let valueA, valueB;
 
             if (criteria === 'duedate') {
-                let valueA = a.getAttribute('data-duedate');
-                let valueB = b.getAttribute('data-duedate');
+                valueA = new Date(a.getAttribute('data-duedate'));
+                valueB = new Date(b.getAttribute('data-duedate'));
 
-                // 값이 비어있거나 잘못된 경우 처리
-                if (!valueA || !valueB) return 0; // 비어있으면 정렬하지 않음
+                if (isNaN(valueA)) valueA = Infinity;
+                if (isNaN(valueB)) valueB = Infinity;
 
-                valueA = new Date(valueA);
-                valueB = new Date(valueB);
-
-                // 날짜로 변환이 실패할 경우, 정렬을 하지 않거나 기본값으로 처리
-                if (isNaN(valueA)) valueA = new Date(0);  // 최소값 처리
-                if (isNaN(valueB)) valueB = new Date(0);  // 최소값 처리
-
-                return valueA - valueB;  // 날짜 오름차순 정렬
-            }
-            else if (criteria === 'priority') {
+                return valueA - valueB;
+            } else if (criteria === 'priority') {
                 valueA = parseInt(a.getAttribute('data-priority'), 10);
                 valueB = parseInt(b.getAttribute('data-priority'), 10);
             } else if (criteria === 'estDur') {
-                valueA = parseInt(a.getAttribute('data-estdur'), 10);
-                valueB = parseInt(b.getAttribute('data-estdur'), 10);
+                valueA = parseInt(b.getAttribute('data-estdur'), 10);
+                valueB = parseInt(a.getAttribute('data-estdur'), 10);
             } else {
                 console.error('Invalid criteria:', criteria);
                 return 0;
             }
 
-            return valueA - valueB; // 오름차순 정렬
+            return valueA - valueB;
         });
 
-        // 정렬된 항목 다시 추가
         list.innerHTML = '';
         items.forEach(item => list.appendChild(item));
     }
 
 
+
     function updateCompleted(id, checkbox) {
-        const completed = checkbox.checked ? 1 : 0; // 체크박스 상태에 따라 값 설정
+        const completed = checkbox.checked ? 1 : 0;
         $.ajax({
             url: 'updateCompleted',
             type: 'POST',

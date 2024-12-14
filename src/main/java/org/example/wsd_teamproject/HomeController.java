@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
+
     @RequestMapping("/")
-    public String redirectToLogin() {
-        return "redirect:/login/login";
+    public String home() {
+        return "index"; // index.jsp로 이동
     }
 }

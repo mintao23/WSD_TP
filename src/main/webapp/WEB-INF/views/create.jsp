@@ -12,7 +12,7 @@
         }
         .form-label {
             font-weight: bold;
-            font-size: 1.5em;
+            font-size: 1.6em;
         }
         * {
             box-sizing: border-box;
@@ -37,7 +37,7 @@
 <div class="container">
     <main>
         <div class="py-5 text-center">
-            <h2>새 할 일 추가</h2>
+            <h1>새 할 일 추가</h1>
         </div>
         <div class="d-flex justify-content-center">
             <form id="todoForm" action="createok" method="post" class="needs-validation w-100" novalidate>

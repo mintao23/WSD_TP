@@ -1,34 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MyBatis 3 Mapper//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Todo">
+    <!-- Result Map -->
+    <resultMap id="TodoResultMap" type="org.example.wsd_teamproject.todo.TodoVO">
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="category" column="category" />
+        <result property="duedate" column="duedate" javaType="java.util.Date" jdbcType="DATE" />
+        <result property="priority" column="priority" />
+        <result property="estDur" column="estDur" />
+        <result property="completed" column="completed" />
+    </resultMap>
+
+    <!-- Insert -->
     <insert id="insertTodo">
         insert into TODOLIST (title, content, category, duedate, priority, estDur)
-        values (#{title}, #{content}, #{category}, #{duedate}, #{priority}, #{estDur})
+        values (#{title}, #{content}, #{category}, #{duedate,jdbcType=DATE}, #{priority}, #{estDur})
     </insert>
+
+    <!-- Update -->
     <update id="updateTodo">
         update TODOLIST
-        set title=#{title}, content=#{content}, category=#{category}, duedate=#{duedate},
+        set title=#{title}, content=#{content}, category=#{category}, duedate=#{duedate,jdbcType=DATE},
             priority=#{priority}, estDur=#{estDur}
         where id=#{id}
     </update>
+
+    <!-- Delete -->
     <delete id="deleteTodo">
         delete from TODOLIST where id=#{id}
     </delete>
-    <select id="getTodo" resultType="todo">
+
+    <!-- Select single -->
+    <select id="getTodo" resultMap="TodoResultMap">
         select * from TODOLIST where id=#{id}
     </select>
-    <select id="getTodoList" resultType="todo">
+
+    <!-- Select all -->
+    <select id="getTodoList" resultMap="TodoResultMap">
         select * from TODOLIST order by id desc
     </select>
+
+    <!-- Update completed status -->
     <update id="updateCompleted">
         UPDATE TODOLIST
         SET completed = #{completed}
         WHERE id = #{id}
     </update>
-    <select id="searchTodos" resultType="org.example.wsd_teamproject.todo.TodoVO">
+
+    <!-- Search -->
+    <select id="searchTodos" resultMap="TodoResultMap">
         SELECT *
         FROM TODOLIST
-        WHERE ${searchType} LIKE #{query}
+        WHERE
+        <choose>
+            <when test="searchType == 'title'">
+                title LIKE #{query}
+            </when>
+            <when test="searchType == 'category'">
+                category LIKE #{query}
+            </when>
+        </choose>
     </select>
 </mapper>
-

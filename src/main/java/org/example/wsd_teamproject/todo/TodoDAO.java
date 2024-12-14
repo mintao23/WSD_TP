@@ -44,7 +44,7 @@ public class TodoDAO {
     public List<TodoVO> searchTodos(String searchType, String query) {
         Map<String, Object> params = new HashMap<>();
         params.put("searchType", searchType);
-        params.put("query", "%" + query + "%"); // LIKE 연산자에 사용할 와일드카드 포함
+        params.put("query", "%" + query + "%");
         return sqlSession.selectList("Todo.searchTodos", params);
     }
 }

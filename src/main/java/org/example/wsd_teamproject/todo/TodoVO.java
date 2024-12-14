@@ -1,5 +1,6 @@
 package org.example.wsd_teamproject.todo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TodoVO {
@@ -46,6 +47,11 @@ public class TodoVO {
 
     public Date getDuedate() {
         return duedate;
+    }
+    public String getFormattedDuedate() {
+        if (duedate == null) return "";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(duedate);
     }
 
     public void setDuedate(Date duedate) {

@@ -6,18 +6,21 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
     <mvc:annotation-driven />
-    <context:component-scan base-package="org.example" />
+    <context:component-scan base-package="org.example.wsd_teamproject" />
 
     <bean id="loginCheckInterceptor" class="org.example.wsd_teamproject.util.LoginCheckInterceptor"/>
+
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/resources/**"/>
             <mvc:exclude-mapping path="/login/**"/>
             <mvc:exclude-mapping path="/todo/createok"/>
+            <mvc:exclude-mapping path="/" />
             <ref bean="loginCheckInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".jsp" />

@@ -93,7 +93,8 @@
     <div class="d-flex justify-content-end mt-3">
         <button class="btn btn-outline-secondary me-2" onclick="sortList('priority')">우선순위</button>
         <button class="btn btn-outline-secondary me-2" onclick="sortList('estDur')">소요시간</button>
-        <button class="btn btn-outline-secondary" onclick="sortList('duedate')">마감일</button>
+        <button class="btn btn-outline-secondary" onclick="sortList('duedate')" data-criteria="duedate">마감일</button>
+
     </div>
 
     <!-- 할 일 목록 -->
@@ -102,7 +103,7 @@
             <li style="cursor:pointer;" class="list-group-item d-flex justify-content-between align-items-center"
                 data-priority="${todo.priority}"
                 data-estdur="${todo.estDur}"
-                data-duedate="${todo.duedate}">
+                data-duedate="${todo.duedate != null ? todo.duedate.toString() : ''}">
                 <div class="d-flex align-items-center">
                     <!-- 체크박스 -->
                     <input type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input me-3"
@@ -152,17 +153,27 @@
             let valueA, valueB;
 
             if (criteria === 'duedate') {
-                valueA = new Date(a.getAttribute('data-duedate'));
-                valueB = new Date(b.getAttribute('data-duedate'));
-                if (isNaN(valueA)) valueA = Infinity;
-                if (isNaN(valueB)) valueB = Infinity;
-                return valueA - valueB;
-            } else if (criteria === 'priority') {
+                let valueA = a.getAttribute('data-duedate');
+                let valueB = b.getAttribute('data-duedate');
+
+                // 값이 비어있거나 잘못된 경우 처리
+                if (!valueA || !valueB) return 0; // 비어있으면 정렬하지 않음
+
+                valueA = new Date(valueA);
+                valueB = new Date(valueB);
+
+                // 날짜로 변환이 실패할 경우, 정렬을 하지 않거나 기본값으로 처리
+                if (isNaN(valueA)) valueA = new Date(0);  // 최소값 처리
+                if (isNaN(valueB)) valueB = new Date(0);  // 최소값 처리
+
+                return valueA - valueB;  // 날짜 오름차순 정렬
+            }
+            else if (criteria === 'priority') {
                 valueA = parseInt(a.getAttribute('data-priority'), 10);
                 valueB = parseInt(b.getAttribute('data-priority'), 10);
             } else if (criteria === 'estDur') {
-                valueA = parseInt(b.getAttribute('data-estdur'), 10);
-                valueB = parseInt(a.getAttribute('data-estdur'), 10);
+                valueA = parseInt(a.getAttribute('data-estdur'), 10);
+                valueB = parseInt(b.getAttribute('data-estdur'), 10);
             } else {
                 console.error('Invalid criteria:', criteria);
                 return 0;

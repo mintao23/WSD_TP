@@ -1,9 +1,13 @@
 package org.example.wsd_teamproject.todo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import java.util.List;
 
@@ -12,6 +16,13 @@ import java.util.List;
 public class TodoController {
     @Autowired
     TodoService todoService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
     // Todo 목록 조회
     @GetMapping("/list")
